@@ -1,7 +1,8 @@
-package com.fahrizal.coinreport
+package com.fahrizal.coinreport.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.fahrizal.coinreport.R
 
 class MainActivity : AppCompatActivity() {
 
