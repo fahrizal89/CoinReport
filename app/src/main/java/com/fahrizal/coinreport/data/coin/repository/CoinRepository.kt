@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CoinRepository {
 
-    fun getCoinCharts(): Flow<List<CoinChart>>
+    fun getCoinPrices(refresh: Boolean): Flow<List<CoinChart>>
 }

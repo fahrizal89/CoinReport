@@ -13,7 +13,7 @@ class CoinEntityRepository @Inject constructor(
     private val networkCoinEntityData: NetworkCoinEntityData
 ) : CoinRepository {
 
-    override fun getCoinCharts(): Flow<List<CoinChart>> {
+    override fun getCoinPrices(refresh: Boolean): Flow<List<CoinChart>> {
         return networkCoinEntityData.getCoinPrices()
             .map { it.toCoinCharts() }
     }

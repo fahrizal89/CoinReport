@@ -19,9 +19,10 @@ class MainViewModel @Inject constructor(
 
     fun getReport(){
         viewModelScope.launch(coroutineDispatcherProvider.io) {
-            getCoinPriceUseCase().catch {
-                Timber.e("ERROR")
+            getCoinPriceUseCase(true).catch {
+                Timber.e("Fetch ERROR")
             }.collect {
+                Timber.d("Fetch Success")
                 it.size
             }
         }

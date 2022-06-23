@@ -9,8 +9,8 @@ class GetCoinPriceUseCase @Inject constructor(
     private val coinRepository: CoinRepository
 ) {
 
-    operator fun invoke(): Flow<List<CoinChart>> {
-        return coinRepository.getCoinCharts()
+    operator fun invoke(refresh:Boolean): Flow<List<CoinChart>> {
+        return coinRepository.getCoinPrices(refresh)
     }
 
 }
