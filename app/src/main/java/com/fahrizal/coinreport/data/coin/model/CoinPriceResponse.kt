@@ -7,22 +7,6 @@ data class CoinPriceResponse(
     val disclaimer: String? = null
 ) {
 
-    data class EUR(
-        val symbol: String? = null,
-        val rateFloat: Double? = null,
-        val code: String? = null,
-        val rate: String? = null,
-        val description: String? = null
-    )
-
-    data class USD(
-        val symbol: String? = null,
-        val rateFloat: Double? = null,
-        val code: String? = null,
-        val rate: String? = null,
-        val description: String? = null
-    )
-
     data class Time(
         val updateduk: String? = null,
         val updatedISO: String? = null,
@@ -35,12 +19,19 @@ data class CoinPriceResponse(
         val uSD: USD? = null
     )
 
-    data class GBP(
-        val symbol: String? = null,
-        val rateFloat: Double? = null,
-        val code: String? = null,
-        val rate: String? = null,
+    class EUR : CoinBpi()
+
+    class USD : CoinBpi()
+
+    class GBP : CoinBpi()
+
+    abstract class CoinBpi {
+
+        val symbol: String? = null
+        val rateFloat: Double? = null
+        val code: String? = null
+        val rate: String? = null
         val description: String? = null
-    )
+    }
 }
 
