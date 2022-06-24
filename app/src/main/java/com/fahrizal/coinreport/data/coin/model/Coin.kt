@@ -1,6 +1,6 @@
-package com.fahrizal.coinreport.domain.model
+package com.fahrizal.coinreport.data.coin.model
 
-data class CoinChart(
+data class Coin(
     val code: String? = "",
     val symbol: String? = "",
     val rate: Double? = 0.0,

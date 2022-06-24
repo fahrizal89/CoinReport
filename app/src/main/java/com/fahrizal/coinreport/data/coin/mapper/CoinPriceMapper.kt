@@ -1,30 +1,30 @@
 package com.fahrizal.coinreport.data.coin.mapper
 
 import com.fahrizal.coinreport.data.coin.model.CoinPriceResponse
-import com.fahrizal.coinreport.domain.model.CoinChart
+import com.fahrizal.coinreport.data.coin.model.Coin
 
 object CoinPriceMapper {
 
-    fun CoinPriceResponse.toCoinCharts(): List<CoinChart> {
-        val coinCharts = ArrayList<CoinChart>()
+    fun CoinPriceResponse.toCoins(): List<Coin> {
+        val coins = ArrayList<Coin>()
 
-        if (bpi == null) return coinCharts
+        if (bpi == null) return coins
 
         bpi.uSD?.let { usd ->
-            coinCharts.add(usd.toCoinChart(chartName ?: ""))
+            coins.add(usd.toCoins(chartName ?: ""))
         }
         bpi.eUR?.let { eur ->
-            coinCharts.add(eur.toCoinChart(chartName ?: ""))
+            coins.add(eur.toCoins(chartName ?: ""))
         }
         bpi.gBP?.let { gbp ->
-            coinCharts.add(gbp.toCoinChart(chartName ?: ""))
+            coins.add(gbp.toCoins(chartName ?: ""))
         }
 
-        return coinCharts
+        return coins
     }
 
-    private fun CoinPriceResponse.CoinBpi.toCoinChart(chartName: String): CoinChart {
-        return CoinChart(
+    private fun CoinPriceResponse.CoinBpi.toCoins(chartName: String): Coin {
+        return Coin(
             code,
             symbol,
             rate?.toDouble(),

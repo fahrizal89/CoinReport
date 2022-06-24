@@ -1,9 +1,9 @@
 package com.fahrizal.coinreport.data.coin.repository
 
-import com.fahrizal.coinreport.domain.model.CoinChart
+import com.fahrizal.coinreport.data.coin.model.Coin
 import kotlinx.coroutines.flow.Flow
 
 interface CoinRepository {
 
-    fun getCoinPrices(refresh: Boolean): Flow<List<CoinChart>>
+    fun getCoinPrices(refresh: Boolean): Flow<List<Coin>>
 }
