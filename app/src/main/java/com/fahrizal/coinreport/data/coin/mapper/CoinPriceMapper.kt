@@ -2,6 +2,8 @@ package com.fahrizal.coinreport.data.coin.mapper
 
 import com.fahrizal.coinreport.data.coin.model.CoinPriceResponse
 import com.fahrizal.coinreport.data.coin.model.Coin
+import java.util.*
+import kotlin.collections.ArrayList
 
 object CoinPriceMapper {
 
@@ -25,12 +27,14 @@ object CoinPriceMapper {
 
     private fun CoinPriceResponse.CoinBpi.toCoins(chartName: String): Coin {
         return Coin(
+            null,
             code,
             symbol,
             rate?.toDouble(),
             description,
             rateFloat,
-            chartName
+            chartName,
+            Date().time
         )
     }
 }
