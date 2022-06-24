@@ -1,5 +1,7 @@
 package com.fahrizal.coinreport.data.coin.model
 
+import com.google.gson.annotations.SerializedName
+
 data class CoinPriceResponse(
     val chartName: String? = null,
     val bpi: Bpi? = null,
@@ -14,9 +16,12 @@ data class CoinPriceResponse(
     )
 
     data class Bpi(
-        val eUR: EUR? = null,
-        val gBP: GBP? = null,
-        val uSD: USD? = null
+        @SerializedName("EUR")
+        val eur: EUR? = null,
+        @SerializedName("GBP")
+        val gbp: GBP? = null,
+        @SerializedName("USD")
+        val usd: USD? = null
     )
 
     class EUR : CoinBpi()
@@ -28,6 +33,7 @@ data class CoinPriceResponse(
     abstract class CoinBpi {
 
         val symbol: String? = null
+        @SerializedName("rate_float")
         val rateFloat: Double? = null
         val code: String? = null
         val rate: String? = null

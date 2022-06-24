@@ -10,7 +10,6 @@ data class Coin(
     val symbol: String? = "",
     val rate: Double? = 0.0,
     val description: String? = "",
-    val rateFloat: Double? = 0.0,
     val chartName: String? = "",
     val updateTime: Long = 0
 )

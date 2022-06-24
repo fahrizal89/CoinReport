@@ -1,5 +1,6 @@
 package com.fahrizal.coinreport.di.module
 
+import com.fahrizal.coinreport.data.coin.dao.CoinDao
 import com.fahrizal.coinreport.data.db.AppDatabase
 import com.fahrizal.coinreport.data.db.AppRoomDatabase
 import dagger.Module
@@ -14,5 +15,10 @@ class DatabaseModule {
     @Provides
     fun provideMyRoomDatabase(appDatabase: AppDatabase): AppRoomDatabase {
         return appDatabase.roomDb
+    }
+
+    @Provides
+    fun provideCoinDao(appRoomDatabase: AppRoomDatabase): CoinDao {
+        return appRoomDatabase.coinDao()
     }
 }

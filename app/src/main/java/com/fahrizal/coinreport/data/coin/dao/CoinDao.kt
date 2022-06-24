@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface CoinDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(bills: List<Coin>)
+    fun insert(coins: List<Coin>)
 
     @Query("SELECT * FROM coin")
     fun getBills(): Flow<List<Coin>>

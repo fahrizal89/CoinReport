@@ -12,13 +12,13 @@ object CoinPriceMapper {
 
         if (bpi == null) return coins
 
-        bpi.uSD?.let { usd ->
+        bpi.usd?.let { usd ->
             coins.add(usd.toCoins(chartName ?: ""))
         }
-        bpi.eUR?.let { eur ->
+        bpi.eur?.let { eur ->
             coins.add(eur.toCoins(chartName ?: ""))
         }
-        bpi.gBP?.let { gbp ->
+        bpi.gbp?.let { gbp ->
             coins.add(gbp.toCoins(chartName ?: ""))
         }
 
@@ -30,9 +30,8 @@ object CoinPriceMapper {
             null,
             code,
             symbol,
-            rate?.toDouble(),
-            description,
             rateFloat,
+            description,
             chartName,
             Date().time
         )
