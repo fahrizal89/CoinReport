@@ -28,4 +28,9 @@ class CoinPriceWorker @AssistedInject constructor(
 
         return Result.success()
     }
+
+    companion object {
+
+        const val WORKER_ID = "CoinPriceWorker"
+    }
 }
