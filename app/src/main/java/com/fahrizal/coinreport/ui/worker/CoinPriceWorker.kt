@@ -5,9 +5,11 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.fahrizal.coinreport.dispatcher.CoroutineDispatcherProvider
-import com.fahrizal.coinreport.domain.usecase.GetCoinPriceUseCase
+import com.fahrizal.coinreport.domain.usecase.DeleteCoinPricePreviousDayUseCase
+import com.fahrizal.coinreport.domain.usecase.SyncCoinPriceUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -16,14 +18,17 @@ class CoinPriceWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val getCoinPriceUseCase: GetCoinPriceUseCase
+    private val syncCoinPriceUseCase: SyncCoinPriceUseCase,
+    private val deleteCoinPricePreviousDayUseCase: DeleteCoinPricePreviousDayUseCase
 ) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
         withContext(coroutineDispatcherProvider.io) {
-            getCoinPriceUseCase.invoke(true).collect {
-                Timber.d("CoinPriceWorker Fetch Success")
-            }
+            deleteCoinPricePreviousDayUseCase()
+                .map { syncCoinPriceUseCase() }
+                .collect {
+                    Timber.d("CoinPriceWorker Fetch Success")
+                }
         }
 
         return Result.success()
