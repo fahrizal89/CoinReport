@@ -22,4 +22,11 @@ class LocalCoinEntityData @Inject constructor(
             emit(true)
         }
     }
+
+    fun deleteCoinPricesLowerThenTime(time: Long): Flow<Boolean> {
+        return flow {
+            coinDao.delete(time)
+            emit(true)
+        }
+    }
 }

@@ -21,4 +21,8 @@ class CoinEntityRepository @Inject constructor(
     override fun saveCoinPrices(coins: List<Coin>): Flow<Boolean> {
         return localCoinEntityData.saveCoinPrices(coins)
     }
+
+    override fun deleteCoinPricesLowerThenTime(time:Long): Flow<Boolean> {
+        return localCoinEntityData.deleteCoinPricesLowerThenTime(time)
+    }
 }

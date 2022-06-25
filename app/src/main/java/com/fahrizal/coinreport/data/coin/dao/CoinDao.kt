@@ -13,6 +13,6 @@ interface CoinDao {
     @Query("SELECT * FROM coin")
     fun getBills(): Flow<List<Coin>>
 
-    @Delete
-    fun delete(bills: List<Coin>)
+    @Query("DELETE FROM coin WHERE coin.updateTime < :time")
+    fun delete(time: Long)
 }
