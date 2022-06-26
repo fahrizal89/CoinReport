@@ -6,10 +6,13 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.fahrizal.coinreport.dispatcher.CoroutineDispatcherProvider
 import com.fahrizal.coinreport.domain.usecase.DeleteCoinPricePreviousDayUseCase
+import com.fahrizal.coinreport.domain.usecase.GetCurrentLocationUseCase
 import com.fahrizal.coinreport.domain.usecase.SyncCoinPriceUseCase
+import com.fahrizal.coinreport.ui.notification.NotificationManager
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -19,15 +22,25 @@ class CoinPriceWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
     private val syncCoinPriceUseCase: SyncCoinPriceUseCase,
-    private val deleteCoinPricePreviousDayUseCase: DeleteCoinPricePreviousDayUseCase
+    private val deleteCoinPricePreviousDayUseCase: DeleteCoinPricePreviousDayUseCase,
+    private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
+    private val notificationManager: NotificationManager
 ) : CoroutineWorker(appContext, workerParams) {
 
+    @FlowPreview
     override suspend fun doWork(): Result {
+        Timber.d("CoinPriceWorker doWork()")
         withContext(coroutineDispatcherProvider.io) {
             deleteCoinPricePreviousDayUseCase()
                 .map { syncCoinPriceUseCase() }
+                .flatMapConcat { getCurrentLocationUseCase() }
                 .collect {
-                    Timber.d("CoinPriceWorker Fetch Success")
+                    val content = "CoinPriceWorker Fetch Success"
+                        .plus(it.latitude).plus(",").plus(it.longitude)
+
+                    notificationManager.notify("CoinPrice", content)
+
+                    Result.success()
                 }
         }
 
