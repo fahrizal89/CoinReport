@@ -16,6 +16,10 @@ class CoinEntityRepository @Inject constructor(
         return networkCoinEntityData.getCoinPrices()
     }
 
+    override fun getSavedCoinPrices(): Flow<List<Coin>> {
+        return localCoinEntityData.getCoinPrices()
+    }
+
     override fun saveCoinPrices(coins: List<Coin>): Flow<Boolean> {
         return localCoinEntityData.saveCoinPrices(coins)
     }

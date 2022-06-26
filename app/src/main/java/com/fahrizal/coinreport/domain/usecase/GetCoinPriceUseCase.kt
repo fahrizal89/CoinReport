@@ -11,9 +11,8 @@ class GetCoinPriceUseCase @Inject constructor(
     private val coinRepository: CoinRepository
 ) {
 
-    operator fun invoke(refresh: Boolean): Flow<List<Coin>> {
-        return coinRepository.fetchCoinPrices(refresh)
-            .map { it.toCoins() }
+    operator fun invoke(): Flow<List<Coin>> {
+        return coinRepository.getSavedCoinPrices()
     }
 
 }

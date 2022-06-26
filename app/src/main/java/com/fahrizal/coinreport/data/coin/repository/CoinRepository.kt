@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface CoinRepository {
 
     fun fetchCoinPrices(refresh: Boolean): Flow<CoinPriceResponse>
+    fun getSavedCoinPrices(): Flow<List<Coin>>
     fun saveCoinPrices(coins: List<Coin>): Flow<Boolean>
     fun deleteCoinPricesLowerThenTime(time: Long): Flow<Boolean>
 }
