@@ -11,5 +11,7 @@ data class Coin(
     val rate: Double? = 0.0,
     val description: String? = "",
     val chartName: String? = "",
-    val updateTime: Long = 0
+    val updateTime: Long = 0,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0
 )

@@ -25,16 +25,15 @@ class CoinPriceWorker @AssistedInject constructor(
     private val notificationManager: NotificationManager
 ) : CoroutineWorker(appContext, workerParams) {
 
-    @FlowPreview
     override suspend fun doWork(): Result {
         Timber.d("CoinPriceWorker doWork()")
         withContext(coroutineDispatcherProvider.io) {
-            syncCoinPriceUseCase()
-                .flatMapConcat { getCurrentLocationUseCase() }
+            getCurrentLocationUseCase()
+                .flatMapConcat { location ->
+                    syncCoinPriceUseCase(location)
+                }
                 .collect {
                     val content = "CoinPriceWorker Fetch Success"
-                        .plus(it.latitude).plus(",").plus(it.longitude)
-
                     notificationManager.notify("CoinPrice", content)
 
                     Result.success()
