@@ -4,22 +4,46 @@ import android.Manifest.permission.*
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import com.fahrizal.coinreport.R
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.viewbinding.ViewBinding
+import com.fahrizal.coin.common.ui.base.BaseActivity
+import com.fahrizal.coinreport.data.coin.model.Coin
+import com.fahrizal.coinreport.databinding.ActivityMainBinding
 import com.fahrizal.coinreport.util.PermissionUtil.isAllowedToAccess
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun constructViewBinding(): ViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
+    override fun init(savedInstanceState: Bundle?) {
         checkLocationPermissions()
+        observeUiState()
         viewModel.getCoinReport()
+    }
+
+    private fun observeUiState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is MainViewModel.CoinUiState.Loaded -> updateCoinData(state.coins)
+                        is MainViewModel.CoinUiState.Error -> showToast(state.stringRes)
+                        else -> showLoading()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateCoinData(coins: List<Coin>) {
+
     }
 
     override fun onRequestPermissionsResult(
@@ -46,6 +70,8 @@ class MainActivity : AppCompatActivity() {
             return true
         }
     }
+
+    private fun showLoading() {}
 
     companion object {
 
