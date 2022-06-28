@@ -6,10 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.fahrizal.coinreport.data.coin.model.Coin
 import com.fahrizal.coinreport.dispatcher.CoroutineDispatcherProvider
 import com.fahrizal.coinreport.domain.usecase.GetCoinPriceUseCase
+import com.fahrizal.coinreport.domain.usecase.SyncCoinPriceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider,
-    private val getCoinPriceUseCase: GetCoinPriceUseCase
+    private val getCoinPriceUseCase: GetCoinPriceUseCase,
+    private val syncCoinPriceUseCase: SyncCoinPriceUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CoinUiState>(CoinUiState.Empty)
@@ -31,6 +34,14 @@ class MainViewModel @Inject constructor(
                 Timber.d("Fetch Success".plus(it.size))
                 _uiState.value = CoinUiState.Loaded(it)
             }
+        }
+    }
+
+    fun refreshData() {
+        viewModelScope.launch(coroutineDispatcherProvider.io) {
+            syncCoinPriceUseCase().catch {
+                Timber.e("Sync ERROR")
+            }.collect()
         }
     }
 

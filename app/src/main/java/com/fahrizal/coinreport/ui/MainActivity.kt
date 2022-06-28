@@ -33,6 +33,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         observeUiState()
         viewModel.getCoinReport()
         initTopCoinData()
+        initRefreshButton()
     }
 
     private fun observeUiState() {
@@ -60,6 +61,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun updateCoinData(coins: List<Coin>) {
         topCoinListAdapter.update(coins)
     }
+
+    private fun initRefreshButton() =
+        getViewBinding().refreshButton.setOnClickListener { viewModel.refreshData() }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
