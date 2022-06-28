@@ -12,7 +12,7 @@ import androidx.viewbinding.ViewBinding
 import com.fahrizal.coin.common.ui.base.BaseActivity
 import com.fahrizal.coinreport.data.coin.model.Coin
 import com.fahrizal.coinreport.databinding.ActivityMainBinding
-import com.fahrizal.coinreport.ui.list.TopCoinListAdapter
+import com.fahrizal.coinreport.ui.adapter.TopCoinListAdapter
 import com.fahrizal.coinreport.util.PermissionUtil.isAllowedToAccess
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

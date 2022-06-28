@@ -10,7 +10,7 @@ interface CoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(coins: List<Coin>)
 
-    @Query("SELECT * FROM coin")
+    @Query("SELECT * FROM coin ORDER BY updateTime DESC")
     fun getCoins(): Flow<List<Coin>>
 
     @Query("DELETE FROM coin WHERE coin.updateTime < :time")

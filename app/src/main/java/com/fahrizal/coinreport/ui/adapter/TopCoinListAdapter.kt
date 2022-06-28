@@ -1,4 +1,4 @@
-package com.fahrizal.coinreport.ui.list
+package com.fahrizal.coinreport.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -28,7 +28,8 @@ class TopCoinListAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: TopCoinViewHolder, position: Int) {
         holder.apply {
-            val symbol = HtmlCompat.fromHtml(coins[position].symbol ?: "", HtmlCompat.FROM_HTML_MODE_LEGACY)
+            val symbol =
+                HtmlCompat.fromHtml(coins[position].symbol ?: "", HtmlCompat.FROM_HTML_MODE_LEGACY)
             rate.text = symbol.toString().plus(" ").plus(coins[position].rate.toString())
             date.text = DateUtil.getDateString(coins[position].updateTime)
             currency.text = coins[position].description.toString()
@@ -41,8 +42,24 @@ class TopCoinListAdapter @Inject constructor() :
     fun update(newCoins: List<Coin>) {
         coins.run {
             clear()
-            addAll(newCoins)
+            addAll(newCoins.getTopDataOnly())
             notifyDataSetChanged()
         }
+    }
+
+    private fun List<Coin>.getTopDataOnly(): List<Coin> {
+        if (this.size > MAX_DATA) {
+            val newCoins = ArrayList<Coin>()
+            for (i: Int in 0 until MAX_DATA) {
+                newCoins.add(this[i])
+            }
+            return newCoins
+        }
+        return this
+    }
+
+    companion object {
+
+        private const val MAX_DATA = 5
     }
 }
