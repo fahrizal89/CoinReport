@@ -7,18 +7,24 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.fahrizal.coin.common.ui.base.BaseActivity
 import com.fahrizal.coinreport.data.coin.model.Coin
 import com.fahrizal.coinreport.databinding.ActivityMainBinding
+import com.fahrizal.coinreport.ui.list.TopCoinListAdapter
 import com.fahrizal.coinreport.util.PermissionUtil.isAllowedToAccess
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var topCoinListAdapter: TopCoinListAdapter
 
     override fun constructViewBinding(): ViewBinding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -26,6 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         checkLocationPermissions()
         observeUiState()
         viewModel.getCoinReport()
+        initTopCoinData()
     }
 
     private fun observeUiState() {
@@ -42,8 +49,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun updateCoinData(coins: List<Coin>) {
+    private fun initTopCoinData() {
+        getViewBinding().topCoinRv.run {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = topCoinListAdapter
+        }
+    }
 
+    private fun updateCoinData(coins: List<Coin>) {
+        topCoinListAdapter.update(coins)
     }
 
     override fun onRequestPermissionsResult(

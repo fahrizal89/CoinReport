@@ -29,6 +29,7 @@ class MainViewModel @Inject constructor(
                 Timber.e("Fetch ERROR")
             }.collect {
                 Timber.d("Fetch Success".plus(it.size))
+                _uiState.value = CoinUiState.Loaded(it)
             }
         }
     }

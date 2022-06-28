@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CoinReport</string>
+
+
+    <string name="rate">Rate</string>
+    <string name="date">Date</string>
+    <string name="currency_desc">Currency Desc</string>
+
 </resources>
