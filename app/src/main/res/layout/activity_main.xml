@@ -5,11 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
+    <com.fahrizal.coinreport.ui.chart.CoinChartView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
     <Button
         android:id="@+id/refreshButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_below="@id/chart"
         android:text="@string/refresh"/>
 
     <TextView

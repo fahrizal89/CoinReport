@@ -16,4 +16,8 @@ object DateUtil {
     @SuppressLint("SimpleDateFormat")
     fun getDateString(timeStamp: Long): String =
         SimpleDateFormat("dd MMMM yyyy hh:mm:ss").format(Date(timeStamp))
+
+    @SuppressLint("SimpleDateFormat")
+    fun getTimeString(timeStamp: Long): String =
+        SimpleDateFormat("hh:mm").format(Date(timeStamp))
 }

@@ -60,6 +60,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun updateCoinData(coins: List<Coin>) {
         topCoinListAdapter.update(coins)
+
+        getViewBinding().chart.updateData(coins)
     }
 
     private fun initRefreshButton() =
