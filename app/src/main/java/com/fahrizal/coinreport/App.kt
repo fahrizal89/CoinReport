@@ -34,7 +34,7 @@ class App : Application(), Configuration.Provider {
 
     private fun initScheduledWorker() {
         val fetchCoinPricesRequest =
-            PeriodicWorkRequestBuilder<CoinPriceWorker>(16, TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<CoinPriceWorker>(60, TimeUnit.MINUTES)
                 .build()
 
         WorkManager.getInstance(this)
