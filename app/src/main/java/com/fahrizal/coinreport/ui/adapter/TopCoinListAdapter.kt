@@ -50,8 +50,8 @@ class TopCoinListAdapter @Inject constructor() :
     private fun List<Coin>.getTopDataOnly(): List<Coin> {
         if (this.size > MAX_DATA) {
             val newCoins = ArrayList<Coin>()
-            for (i: Int in 0 until MAX_DATA) {
-                newCoins.add(this[i])
+            for (i: Int in 0 until  MAX_DATA) {
+                newCoins.add(this[size-1-i])
             }
             return newCoins
         }
