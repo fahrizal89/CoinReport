@@ -63,13 +63,6 @@ class CoinChartView : LineChart {
     private fun updateRange(coins: List<Coin>) {
         setVisibleXRangeMaximum(5f)
         moveViewToX(coins.size.toFloat())
-        xAxis.valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return if (value < 1) ""
-                else {
-                    DateUtil.getTimeString(coins[value.toInt()].updateTime)
-                }
-            }
-        }
+        xAxis.setDrawLabels(false)
     }
 }
