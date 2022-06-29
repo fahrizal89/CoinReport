@@ -2,6 +2,7 @@ package com.fahrizal.coinreport.ui.chart
 
 import android.content.Context
 import android.util.AttributeSet
+import com.fahrizal.coin.common.util.ColorUtil
 import com.fahrizal.coinreport.data.coin.model.Coin
 import com.fahrizal.coinreport.util.DateUtil
 import com.github.mikephil.charting.charts.LineChart
@@ -51,7 +52,9 @@ class CoinChartView : LineChart {
         }
 
         for ((key, value) in map) {
-            lineDataSet.add(LineDataSet(value, key))
+            val line = LineDataSet(value, key)
+            line.color = ColorUtil.getRandomColor()
+            lineDataSet.add(line)
         }
 
         return lineDataSet
