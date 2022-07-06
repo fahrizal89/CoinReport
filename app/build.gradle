@@ -83,4 +83,9 @@ dependencies {
 
     //chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //Unit test
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.mockito:mockito-inline:3.3.0"
+    testImplementation "org.mockito:mockito-core:3.3.0"
 }
